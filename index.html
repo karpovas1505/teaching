@@ -1,0 +1,131 @@
+<html>
+	<head>
+		<script id="sap-ui-bootstrap" src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" data-sap-ui-libs="sap.m" data-sap-ui-theme="sap_bluecrystal" data-sap-ui-bindingSyntax="complex">
+		</script>
+
+		<script>
+           oModel = sap.ui.model.json.JSONModel( { 
+           											labelText:"My" ,
+           											ButtonText:"MyBut",
+           											tabData: {
+           												row1:[ { rc1: "r1" },
+           														{ rc1: "r2" } ]
+           											}
+           	
+           } );
+           sap.ui.getCore().setModel(oModel);
+	       
+	       
+		   var oLabel = new sap.m.Label( {
+		   		text:"{/labelText}",
+		   		design: sap.m.LabelDesign.Bold,
+		   		width: "500px",
+		   		textAlign: "Center"
+		   });
+		   oLabel.placeAt("content");
+
+		   var otxt = new sap.m.Input( {
+		   		value:"{/labelText}",
+		   		valueLiveUpdate:true
+		   });
+		   otxt.placeAt("content");
+		   
+		   var oButton = new sap.m.Button ({
+		   		text:"{/labelText}",
+		   		type:sap.m.ButtonType.Reject,
+		   		press:function() {
+		   			alert("Button pressed");
+		   		}
+		   }
+		   	);
+		   oButton.placeAt("content");
+		   
+		   var oTable = new sap.m.Table( { 
+		   	columns: [
+			   new sap.m.Column( {
+			   	header:  new sap.m.Label({
+			   		text: "Col1"
+					   	} ) 	   	
+				   }
+			   	) ,
+	
+			    new sap.m.Column( {
+			   	header:  new sap.m.Label({
+			   		text: "Col2"
+			   		} ) 	   	
+					}
+			   	) ,
+	
+			   new sap.m.Column( {
+			   	header:  new sap.m.Label({
+			   		text: "Col3"
+			   		} ) 	   	
+					}
+			   	) 
+		   	] } );
+		   oTable.addItem( new sap.m.ColumnListItem( {
+		   	cells: [ new sap.m.Label({text:"{/labelText}"		   			}),
+		   	         new sap.m.Label({text:"row1col2"		   			}),
+		   	         new sap.m.Label({text:"row1col3"		   			})
+		   		
+		   		]
+				}
+		   	) );	
+		   oTable.addItem( new sap.m.ColumnListItem( {
+		   	cells: [ new sap.m.Label({text:"{/tabData/row1/1/rc1}"		   			}),
+		   	         new sap.m.Label({text:"row2col2"		   			}),
+		   	         new sap.m.Label({text:"row2col3"		   			})
+		   		
+		   		]
+				}
+		   	) );	
+		   oTable.placeAt("content");
+
+// ODATA V2
+	       var oDataModelV2 = sap.ui.model.odata.v2.ODataModel( "http://services.odata.org/V2/(S(notddjdwcph10oimprbzfw13))/OData/OData.svc/", { tokenHandling:false } ); 
+           sap.ui.getCore().setModel(oDataModelV2,"oDat2");
+           oDataModelV2.read();
+		   var oDataTxt2 = new sap.m.Input( {
+		   		value:"{oDat2>/Products(0)/Name}",
+		   		valueLiveUpdate:true
+		   });
+		   oDataTxt2.placeAt("content1");
+  
+
+// ODATA V4
+	   //    oDataModel = sap.ui.model.odata.v4.ODataModel( {
+	   //    	    groupId : "$direct",
+		  //     	serviceUrl:"http://services.odata.org/v4/TripPinServiceRW/",
+		  //     	synchronizationMode : "None",
+	   //    } ); 
+    //       sap.ui.getCore().setModel(oDataModel,"oDat");
+
+		  // var oDataTxt = new sap.m.Input( {
+		  // 		value:"{oDat>/People('russellwhyte')/UserName}",
+		  // 		valueLiveUpdate:true
+		  // });
+		  // oDataTxt.placeAt("content2");
+		   
+		  // var oList = new sap.m.List();
+		   
+		  // oList.bindItems({
+		  //  path : "oDat>/People",
+		  //  template : new sap.m.StandardListItem({
+		  //    title : "{oDat>FirstName} {oDat>LastName}",
+		  //    description : { path : "oDat>UserName" }
+		  //})
+		  // });
+	   //   oList.placeAt("content2");
+
+		</script>
+	</head>
+
+	<body class="sapUIBody">
+		<h1>Welcome to SAP FIORI</h1>
+		<div id="content"></div>
+		<h1>Welcome to ODATA V2</h1>
+		<div id="content1"></div>
+		<h1>Welcome to ODATA V4</h1>
+		<div id="content2"></div>
+	</body>
+</html>
